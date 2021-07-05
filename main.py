@@ -147,19 +147,31 @@ def fight(fighterperson, monsterperson):
     while fighterperson.health > 0 and monsterperson.health > 0:
         turnCounter += 1
         if initFighter >= initMonster:
-            damageRoll = dXroll(fighterperson.damageDie) + fighterperson.damage
-            print("The " + fighterperson.name + " deals " + damageRoll.__str__())
-            monsterperson.health -= damageRoll
-            if monsterperson.health < 0:
-                monsterperson.health = 0
+            toHitRoll = dXroll(20)
+            toHitRollTotal = toHitRoll + fighterperson.toHit
+            if toHitRollTotal >= monsterperson.ac:
+                damageRoll = dXroll(fighterperson.damageDie) + fighterperson.damage
+                if toHitRoll == 20: #TODO add support for crit ranges
+                    damageRoll += dXroll(fighterperson.damageDie)
+                    print("The " + fighterperson.name + " crit!")
+                print("The " + fighterperson.name + " deals " + damageRoll.__str__())
+                monsterperson.health -= damageRoll
+                if monsterperson.health < 0:
+                    monsterperson.health = 0
             print(monsterperson.health.__str__() + " health left for " + monsterperson.name)
             initFighter -= 20
         else:
-            damageRoll = dXroll(monsterperson.damageDie) + monsterperson.damage
-            print("The " + monsterperson.name + " deals " + damageRoll.__str__())
-            fighterperson.health -= damageRoll
-            if fighterperson.health < 0:
-                fighterperson.health = 0
+            toHitRoll = dXroll(20)
+            toHitRollTotal = toHitRoll + monsterperson.toHit
+            if toHitRollTotal >= fighterperson.ac:
+                damageRoll = dXroll(monsterperson.damageDie) + monsterperson.damage
+                if toHitRoll == 20: #TODO add support for crit ranges
+                    damageRoll += dXroll(monsterperson.damageDie)
+                    print("The " + monsterperson.name + " crit!")
+                print("The " + monsterperson.name + " deals " + damageRoll.__str__())
+                fighterperson.health -= damageRoll
+                if fighterperson.health < 0:
+                    fighterperson.health = 0
             print(fighterperson.health.__str__() + " health left for " + fighterperson.name)
             initMonster -= 20
     print("The fight took " + turnCounter.__floor__().__str__() + " turns")
