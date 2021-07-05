@@ -1,14 +1,72 @@
+import math
 import random
-
+import enum
 
 class Combatant:
     health = 0
+    maxhealth = 0
+    truemaxhealth = 0 #Used for things that drain max hp but reset on long rest
+    temphealth = 0
     ac = 0
     toHit = 0
     damage = 0
     damageDie = 0
     initiative = 0
     initiativeDie = 0
+    speed = 0
+    critrange = 0
+
+    class Size(enum):
+        Tiny = 1
+        Small = 2
+        Medium = 3
+        Large = 4
+        Huge = 5
+        Gargantuan = 6
+
+
+    magicalattacks = False
+
+    #TODO Deal with resistance and immunities?
+    #TODO weapon range stuff?
+    #TODO deal with whether we need only base stats and derive from that or we take things like toHit straight up
+
+    strength = 0
+    dexterity = 0
+    constitution = 0
+    intelligence = 0
+    wisdom = 0
+    charisma = 0
+
+    athleticsprof = 0
+    medicineprof = 0
+    acrobaticsprof = 0
+
+    strengthsaveprof = False
+    dexteritysaveprof = False
+    constitutionsaveprof = False
+    intelligencesaveprof = False
+    wisdomsaveprof = False
+    charismasaveprof = False
+
+    barbarianlevel = 0
+    bardlevel = 0
+    clericlevel = 0
+    druidlevel = 0
+    fighterlevel = 0
+    monklevel = 0
+    paladinlevel = 0
+    rangerlevel = 0
+    roguelevel = 0
+    sorcererlevel = 0
+    warlocklevel = 0
+    wizardlevel = 0
+    customclasslevel = 0
+
+    totalLevel = barbarianlevel + bardlevel + clericlevel + druidlevel + fighterlevel + monklevel + paladinlevel \
+                 + rangerlevel + roguelevel + sorcererlevel + warlocklevel + wizardlevel + customclasslevel
+
+    monster = False
 
     name = ""
 
@@ -23,8 +81,43 @@ class Combatant:
         self.initiativeDie = initiativeDie
 
 
+def toabilityscoremodifier(abilityscore):
+    return math.floor((abilityscore - 10) / 2)
+
+
 def dXroll(upperbound):
     return random.randint(1, upperbound)
+
+
+def proficiencybonus(combatant):
+    if combatant.monster:
+        if 0 < combatant.totalLevel < 5:
+            return 2
+        if combatant.totalLevel < 9:
+            return 3
+        if combatant.totalLevel < 13:
+            return 4
+        if combatant.totalLevel < 17:
+            return 5
+        if combatant.totalLevel < 21:
+            return 6
+        if combatant.totalLevel < 25:
+            return 7
+        if combatant.totalLevel < 29:
+            return 8
+        else:
+            return 9
+    else:
+        if 0 < combatant.totalLevel < 5:
+            return 2
+        if combatant.totalLevel < 9:
+            return 3
+        if combatant.totalLevel < 13:
+            return 4
+        if combatant.totalLevel < 17:
+            return 5
+        else:
+            return 6
 
 
 def fight(fighterperson, monsterperson):
@@ -33,23 +126,23 @@ def fight(fighterperson, monsterperson):
     turnCounter = 0
 
     print("Here are our contestants:")
-    print("")
+    print()
     print("Name: " + fighterperson.name)
     print("Health: " + fighterperson.health.__str__())
     print("To hit bonus: " + fighterperson.toHit.__str__())
     print("Damage bonus: " + fighterperson.damage.__str__())
     print("Armor class: " + fighterperson.ac.__str__())
     print("Initiative bonus: " + fighterperson.initiative.__str__())
-    print("")
-    print("")
+    print()
+    print()
     print("Name: " + monsterperson.name)
     print("Health: " + monsterperson.health.__str__())
     print("To hit bonus: " + monsterperson.toHit.__str__())
     print("Damage bonus: " + monsterperson.damage.__str__())
     print("Armor class: " + monsterperson.ac.__str__())
     print("Initiative bonus: " + monsterperson.initiative.__str__())
-    print("")
-    print("")
+    print()
+    print()
 
     while fighterperson.health > 0 and monsterperson.health > 0:
         turnCounter += 1
@@ -150,14 +243,14 @@ if __name__ == '__main__':
 
     else:
         print("choice not recognized")
-    print("")
+    print()
     print("Here are the simulation stats:")
-    print("")
+    print()
     print("Monster stats")
     print("Monster wins: " + str(monsterWins))
     print("Monster win percentage: " + str(
         round(((monsterWins / simulationTrials) * 100), roundingPrecisionPercentage)) + "%")
-    print("")
+    print()
     print("Fighter stats")
     print("Fighter wins: " + str(fighterWins))
     print("Fighter win percentage: " + str(
