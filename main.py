@@ -1,6 +1,6 @@
 import math
 import random
-import enum
+from enum import Enum
 
 class Combatant:
     health = 0
@@ -16,7 +16,7 @@ class Combatant:
     speed = 0
     critrange = 0
 
-    class Size(enum):
+    class Size(Enum):
         Tiny = 1
         Small = 2
         Medium = 3
