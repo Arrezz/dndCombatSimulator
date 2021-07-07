@@ -2,10 +2,11 @@ import math
 import random
 from enum import Enum
 
+
 class Combatant:
     health = 0
     maxhealth = 0
-    truemaxhealth = 0 #Used for things that drain max hp but reset on long rest
+    truemaxhealth = 0  # Used for things that drain max hp but reset on long rest
     temphealth = 0
     ac = 0
     toHit = 0
@@ -24,12 +25,13 @@ class Combatant:
         Huge = 5
         Gargantuan = 6
 
-
     magicalattacks = False
+    silveredattacks = False
+    adamantiteattacks = False
 
-    #TODO Deal with resistance and immunities?
-    #TODO weapon range stuff?
-    #TODO deal with whether we need only base stats and derive from that or we take things like toHit straight up
+    # TODO Deal with resistance and immunities?
+    # TODO weapon range stuff?
+    # TODO deal with whether we need only base stats and derive from that or we take things like toHit straight up
 
     strength = 0
     dexterity = 0
@@ -38,16 +40,9 @@ class Combatant:
     wisdom = 0
     charisma = 0
 
-    athleticsprof = 0
-    medicineprof = 0
-    acrobaticsprof = 0
+    skillprof = []
 
-    strengthsaveprof = False
-    dexteritysaveprof = False
-    constitutionsaveprof = False
-    intelligencesaveprof = False
-    wisdomsaveprof = False
-    charismasaveprof = False
+    saveprof = []
 
     barbarianlevel = 0
     bardlevel = 0
@@ -151,7 +146,7 @@ def fight(fighterperson, monsterperson):
             toHitRollTotal = toHitRoll + fighterperson.toHit
             if toHitRollTotal >= monsterperson.ac:
                 damageRoll = dXroll(fighterperson.damageDie) + fighterperson.damage
-                if toHitRoll == 20: #TODO add support for crit ranges
+                if toHitRoll == 20:  # TODO add support for crit ranges
                     damageRoll += dXroll(fighterperson.damageDie)
                     print("The " + fighterperson.name + " crit!")
                 print("The " + fighterperson.name + " deals " + damageRoll.__str__())
@@ -165,7 +160,7 @@ def fight(fighterperson, monsterperson):
             toHitRollTotal = toHitRoll + monsterperson.toHit
             if toHitRollTotal >= fighterperson.ac:
                 damageRoll = dXroll(monsterperson.damageDie) + monsterperson.damage
-                if toHitRoll == 20: #TODO add support for crit ranges
+                if toHitRoll == 20:  # TODO add support for crit ranges
                     damageRoll += dXroll(monsterperson.damageDie)
                     print("The " + monsterperson.name + " crit!")
                 print("The " + monsterperson.name + " deals " + damageRoll.__str__())
