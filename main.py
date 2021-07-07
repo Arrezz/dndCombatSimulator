@@ -185,23 +185,23 @@ def fight(fighterperson, monsterperson):
 
 
 def inputCustomCombatant():
-    fighterHealth = int(input("What do you want the fighters health to be?"))
-    fighterAc = int(input("What do you want the fighters ac to be?"))
-    fighterToHit = int(input("What do you want the fighters to hit bonus to be?"))
-    fighterDamage = int(input("What do you want the fighters damage bonus to be?"))
-    fighterDamageDie = int(input("What do you want the fighters damage die size to be? i.e 20 for a d20"))
-    fighterInitiative = int(input("What do you want the fighters initiative bonus to be?"))
-    fighterInitiativeDie = int(input("What do you want the fighters initiative die to be"))
-    fighterName = (input("What do you want the fighters name to be?"))
+    fighterHealth = int(input("What do you want the fighters health to be? "))
+    fighterAc = int(input("What do you want the fighters ac to be? "))
+    fighterToHit = int(input("What do you want the fighters to hit bonus to be? "))
+    fighterDamage = int(input("What do you want the fighters damage bonus to be? "))
+    fighterDamageDie = int(input("What do you want the fighters damage die size to be? i.e 20 for a d20 "))
+    fighterInitiative = int(input("What do you want the fighters initiative bonus to be? "))
+    fighterInitiativeDie = int(input("What do you want the monsters initiative die to be? i.e 20 for a d20 "))
+    fighterName = (input("What do you want the fighters name to be ?"))
 
-    monsterHealth = int(input("What do you want the monsters health to be?"))
-    monsterAc = int(input("What do you want the monsters ac to be?"))
-    monsterToHit = int(input("What do you want the monsters to hit bonus to be?"))
-    monsterDamage = int(input("What do you want the monsters damage bonus to be?"))
-    monsterDamageDie = int(input("What do you want the monsters damage die size to be? i.e 20 for a d20"))
-    monsterInitiative = int(input("What do you want the monsters initiative bonus to be?"))
-    monsterInitiativeDie = int(input("What do you want the monsters initiative die to be"))
-    monsterName = (input("What do you want the monsters name to be?"))
+    monsterHealth = int(input("What do you want the monsters health to be? "))
+    monsterAc = int(input("What do you want the monsters ac to be? "))
+    monsterToHit = int(input("What do you want the monsters to hit bonus to be? "))
+    monsterDamage = int(input("What do you want the monsters damage bonus to be? "))
+    monsterDamageDie = int(input("What do you want the monsters damage die size to be? i.e 20 for a d20 "))
+    monsterInitiative = int(input("What do you want the monsters initiative bonus to be? "))
+    monsterInitiativeDie = int(input("What do you want the monsters initiative die to be? i.e 20 for a d20 "))
+    monsterName = (input("What do you want the monsters name to be? "))
 
     fighterperson = Combatant(fighterHealth, fighterAc, fighterToHit, fighterDamage, fighterDamageDie,
                               fighterInitiative, fighterInitiativeDie, fighterName)
@@ -225,6 +225,7 @@ if __name__ == '__main__':
 
     # Code
     if defaultChoice == "C" or defaultChoice == "c":
+        inputCustomCombatant()
         defaultFighter = Combatant(20, 16, 4, 3, 6, 0, 20, "fighterperson")
         defaultMonster = Combatant(20, 10, 3, 3, 6, 0, 20, "monsterperson")
 
