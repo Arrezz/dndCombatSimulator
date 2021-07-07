@@ -34,6 +34,10 @@ class Combatant:
     # TODO Deal with resistance and immunities?
     # TODO weapon range stuff?
     # TODO deal with whether we need only base stats and derive from that or we take things like toHit straight up
+    # TODO reroll die under certain number?
+
+    advantage = False
+
 
     strength = 0
     dexterity = 0
@@ -144,7 +148,10 @@ def fight(fighterperson, monsterperson):
     while fighterperson.health > 0 and monsterperson.health > 0:
         turnCounter += 1
         if initFighter >= initMonster:
-            toHitRoll = dXroll(20)
+            if fighterperson.advantage:
+                toHitRoll = max(dXroll(20), dXroll(20))
+            else:
+                toHitRoll = dXroll(20)
             toHitRollTotal = toHitRoll + fighterperson.toHit
             print("The " + fighterperson.name + " rolled a " + str(toHitRollTotal) + " to hit " + monsterperson.name) #Better/more accurate printout?
             if toHitRollTotal >= monsterperson.ac:
@@ -161,7 +168,10 @@ def fight(fighterperson, monsterperson):
                 print("The " + fighterperson.name + " missed!")
             initFighter -= 20
         else:
-            toHitRoll = dXroll(20)
+            if monsterperson.advantage:
+                toHitRoll = max(dXroll(20), dXroll(20))
+            else:
+                toHitRoll = dXroll(20)
             toHitRollTotal = toHitRoll + monsterperson.toHit
             print("The " + monsterperson.name + " rolled a " + str(toHitRollTotal) + " to hit " + fighterperson.name) #Better/more accurate printout?
             if toHitRollTotal >= fighterperson.ac:
