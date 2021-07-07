@@ -38,6 +38,7 @@ class Combatant:
 
     advantage = False
 
+    feats = []
 
     strength = 0
     dexterity = 0
@@ -148,7 +149,9 @@ def fight(fighterperson, monsterperson):
     while fighterperson.health > 0 and monsterperson.health > 0:
         turnCounter += 1
         if initFighter >= initMonster:
-            if fighterperson.advantage:
+            if fighterperson.feats.count("Elven Accuracy") > 0 and fighterperson.advantage:
+                toHitRoll = max(dXroll(20), dXroll(20), dXroll(20))
+            elif fighterperson.advantage:
                 toHitRoll = max(dXroll(20), dXroll(20))
             else:
                 toHitRoll = dXroll(20)
@@ -168,7 +171,9 @@ def fight(fighterperson, monsterperson):
                 print("The " + fighterperson.name + " missed!")
             initFighter -= 20
         else:
-            if monsterperson.advantage:
+            if fighterperson.feats.count("Elven Accuracy") > 0 and fighterperson.advantage:
+                toHitRoll = max(dXroll(20), dXroll(20), dXroll(20))
+            elif fighterperson.advantage:
                 toHitRoll = max(dXroll(20), dXroll(20))
             else:
                 toHitRoll = dXroll(20)
