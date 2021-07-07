@@ -144,6 +144,7 @@ def fight(fighterperson, monsterperson):
         if initFighter >= initMonster:
             toHitRoll = dXroll(20)
             toHitRollTotal = toHitRoll + fighterperson.toHit
+            print("The " + fighterperson.name + " rolled a " + str(toHitRollTotal) + " to hit " + monsterperson.name) #Better/more accurate printout?
             if toHitRollTotal >= monsterperson.ac:
                 damageRoll = dXroll(fighterperson.damageDie) + fighterperson.damage
                 if toHitRoll == 20:  # TODO add support for crit ranges
@@ -153,11 +154,14 @@ def fight(fighterperson, monsterperson):
                 monsterperson.health -= damageRoll
                 if monsterperson.health < 0:
                     monsterperson.health = 0
-            print(monsterperson.health.__str__() + " health left for " + monsterperson.name)
+                print(monsterperson.health.__str__() + " health left for " + monsterperson.name)
+            else:
+                print("The " + fighterperson.name + " missed!")
             initFighter -= 20
         else:
             toHitRoll = dXroll(20)
             toHitRollTotal = toHitRoll + monsterperson.toHit
+            print("The " + monsterperson.name + " rolled a " + str(toHitRollTotal) + " to hit " + fighterperson.name) #Better/more accurate printout?
             if toHitRollTotal >= fighterperson.ac:
                 damageRoll = dXroll(monsterperson.damageDie) + monsterperson.damage
                 if toHitRoll == 20:  # TODO add support for crit ranges
@@ -167,7 +171,9 @@ def fight(fighterperson, monsterperson):
                 fighterperson.health -= damageRoll
                 if fighterperson.health < 0:
                     fighterperson.health = 0
-            print(fighterperson.health.__str__() + " health left for " + fighterperson.name)
+                print(fighterperson.health.__str__() + " health left for " + fighterperson.name)
+            else:
+                print("The " + monsterperson.name + " missed!")
             initMonster -= 20
     print("The fight took " + turnCounter.__floor__().__str__() + " turns")
     if fighterperson.health > 0:
