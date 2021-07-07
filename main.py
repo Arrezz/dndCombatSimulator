@@ -1,6 +1,8 @@
+import json
 import math
 import random
 from enum import Enum
+from types import SimpleNamespace
 
 
 class Combatant:
@@ -211,49 +213,54 @@ def inputCustomCombatant():
     return fighterperson, monsterperson
 
 
+def simulateFight(fighter, monster):
+    fighterWins = 0
+    monsterWins = 0
+    for i in range(0, simulationTrials):
+        print("")
+        print("Start round " + i.__str__() + "!")
+        result = fight(fighter, monster)
+        if result == 0:
+            fighterWins += 1
+        else:
+            monsterWins += 1
+    return fighterWins, monsterWins
+
+
 if __name__ == '__main__':
     # Inputs
-    defaultChoice = input("Do you wish to specify your [C]ombatants or go with [D]efault values? ")
+    defaultChoice = input("Do you wish to specify your [C]ombatants or go with [D]efault values or go with a [T]extfile? ")
     simulationTrials = int(input("How many times do you want to simulate the combat? (Integer) "))
     roundingPrecisionPercentage = int(input("How many places do you wish to round percentage stats to? (Integer) "))
 
     # Variables
-    fighterWins = 0
-    monsterWins = 0
     if roundingPrecisionPercentage == "":
         roundingPrecisionPercentage = 2
 
     # Code
     if defaultChoice == "C" or defaultChoice == "c":
-        inputCustomCombatant()
-        defaultFighter = Combatant(20, 16, 4, 3, 6, 0, 20, "fighterperson")
-        defaultMonster = Combatant(20, 10, 3, 3, 6, 0, 20, "monsterperson")
+        fighter, monster = inputCustomCombatant()
 
-        for i in range(0, simulationTrials):
-            print("")
-            print("Start round " + i.__str__() + "!")
-            fighter = defaultFighter
-            monster = defaultMonster
-            result = fight(fighter, monster)
-            if result == 0:
-                fighterWins += 1
-            else:
-                monsterWins += 1
+        fighterWins, monsterWins = simulateFight(fighter, monster)
 
     if defaultChoice == "D" or defaultChoice == "d":
         defaultFighter = Combatant(20, 16, 4, 3, 6, 0, 20, "fighterperson")  # TODO not working currently
         defaultMonster = Combatant(20, 10, 3, 3, 6, 0, 20, "monsterperson")
 
-        for i in range(0, simulationTrials):
-            print("")
-            print("Start round " + i.__str__() + "!")
-            fighter = Combatant(20, 16, 4, 3, 6, 0, 20, "fighterperson")  # TODO not working currently
-            monster = Combatant(20, 10, 3, 3, 6, 0, 20, "monsterperson")
-            result = fight(fighter, monster)
-            if result == 0:
-                fighterWins += 1
-            else:
-                monsterWins += 1
+        fighterWins, monsterWins = simulateFight(fighter, monster)
+
+    if defaultChoice == "T" or defaultChoice == "t":
+
+        fileName = input("What is the name of the file you wish to use including file extension? ")
+
+        file = open(fileName, "r")
+        data = json.load(file)
+        fighter = json.loads(json.dumps(data), object_hook=lambda d: SimpleNamespace(**d))
+
+        monster = fighter
+        file.close()
+
+        fighterWins, monsterWins = simulateFight(fighter, monster)
 
     else:
         print("choice not recognized")
