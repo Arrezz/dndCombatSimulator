@@ -17,7 +17,7 @@ class Combatant:
     initiative = 0
     initiativeDie = 0
     speed = 0
-    critrange = 0
+    critrange = 20
 
     class Size(Enum):
         Tiny = 1
@@ -72,7 +72,7 @@ class Combatant:
 
     name = ""
 
-    def __init__(self, health, ac, toHit, damage, damageDie, initiative, initiativeDie, name):
+    def __init__(self, health, ac, toHit, damage, damageDie, initiative, initiativeDie, name, feats, advantage):
         self.health = health
         self.ac = ac
         self.toHit = toHit
@@ -81,6 +81,8 @@ class Combatant:
         self.name = name
         self.damageDie = damageDie
         self.initiativeDie = initiativeDie
+        self.feats = feats
+        self.advantage = advantage
 
 
 def toabilityscoremodifier(abilityscore):
