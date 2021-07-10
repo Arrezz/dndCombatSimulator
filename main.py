@@ -38,8 +38,11 @@ class Combatant:
     # TODO reroll die under certain number?
 
     advantage = False
+    disadvantage = False
 
     feats = []
+
+    conditions = []
 
     strength = 0
     dexterity = 0
