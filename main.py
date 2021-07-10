@@ -42,7 +42,7 @@ class Combatant:
 
     feats = []
 
-    conditions = []
+    conditions = []  # https://roll20.net/compendium/dnd5e/Conditions#content
 
     strength = 0
     dexterity = 0
