@@ -158,10 +158,11 @@ def fight(fighterperson, monsterperson):
             else:
                 toHitRoll = dXroll(20)
             toHitRollTotal = toHitRoll + fighterperson.toHit
-            print("The " + fighterperson.name + " rolled a " + str(toHitRollTotal) + " to hit " + monsterperson.name) #Better/more accurate printout?
+            print("The " + fighterperson.name + " rolled a " + str(
+                toHitRollTotal) + " to hit " + monsterperson.name)  # Better/more accurate printout?
             if toHitRollTotal >= monsterperson.ac:
                 damageRoll = dXroll(fighterperson.damageDie) + fighterperson.damage
-                if toHitRoll == 20:  # TODO add support for crit ranges
+                if toHitRoll >= fighterperson.critrange:
                     damageRoll += dXroll(fighterperson.damageDie)
                     print("The " + fighterperson.name + " crit!")
                 print("The " + fighterperson.name + " deals " + damageRoll.__str__())
@@ -180,10 +181,11 @@ def fight(fighterperson, monsterperson):
             else:
                 toHitRoll = dXroll(20)
             toHitRollTotal = toHitRoll + monsterperson.toHit
-            print("The " + monsterperson.name + " rolled a " + str(toHitRollTotal) + " to hit " + fighterperson.name) #Better/more accurate printout?
+            print("The " + monsterperson.name + " rolled a " + str(
+                toHitRollTotal) + " to hit " + fighterperson.name)  # Better/more accurate printout?
             if toHitRollTotal >= fighterperson.ac:
                 damageRoll = dXroll(monsterperson.damageDie) + monsterperson.damage
-                if toHitRoll == 20:  # TODO add support for crit ranges
+                if toHitRoll >= monsterperson.critrange:
                     damageRoll += dXroll(monsterperson.damageDie)
                     print("The " + monsterperson.name + " crit!")
                 print("The " + monsterperson.name + " deals " + damageRoll.__str__())
@@ -246,7 +248,8 @@ def simulateFight(fighter, monster):
 
 if __name__ == '__main__':
     # Inputs
-    defaultChoice = input("Do you wish to specify your [C]ombatants or go with [D]efault values or go with a [T]extfile? ")
+    defaultChoice = input(
+        "Do you wish to specify your [C]ombatants or go with [D]efault values or go with a [T]extfile? ")
     simulationTrials = int(input("How many times do you want to simulate the combat? (Integer) "))
     roundingPrecisionPercentage = int(input("How many places do you wish to round percentage stats to? (Integer) "))
 
@@ -281,6 +284,8 @@ if __name__ == '__main__':
 
     else:
         print("choice not recognized")
+        monsterWins = 0
+        fighterWins = 0
     print()
     print("Here are the simulation stats:")
     print()
