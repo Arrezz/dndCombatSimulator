@@ -18,6 +18,7 @@ class Combatant:
     initiativeDie = 0
     speed = 0
     critrange = 20
+    critextradie = 0
 
     class Size(Enum):
         Tiny = 1
@@ -159,11 +160,14 @@ def fight(fighterperson, monsterperson):
                 toHitRoll = dXroll(20)
             toHitRollTotal = toHitRoll + fighterperson.toHit
             print("The " + fighterperson.name + " rolled a " + str(
-                toHitRollTotal) + " to hit " + monsterperson.name)  # Better/more accurate printout?
+                toHitRollTotal) + " to hit " + monsterperson.name)
             if toHitRollTotal >= monsterperson.ac:
                 damageRoll = dXroll(fighterperson.damageDie) + fighterperson.damage
                 if toHitRoll >= fighterperson.critrange:
-                    damageRoll += dXroll(fighterperson.damageDie)
+                    critextradie = fighterperson.critextradie + 1 #+1 because of base crit die
+                    while critextradie > 0:
+                        damageRoll += dXroll(fighterperson.damageDie)
+                        critextradie -= 1
                     print("The " + fighterperson.name + " crit!")
                 print("The " + fighterperson.name + " deals " + damageRoll.__str__())
                 monsterperson.health -= damageRoll
@@ -182,11 +186,14 @@ def fight(fighterperson, monsterperson):
                 toHitRoll = dXroll(20)
             toHitRollTotal = toHitRoll + monsterperson.toHit
             print("The " + monsterperson.name + " rolled a " + str(
-                toHitRollTotal) + " to hit " + fighterperson.name)  # Better/more accurate printout?
+                toHitRollTotal) + " to hit " + fighterperson.name)
             if toHitRollTotal >= fighterperson.ac:
                 damageRoll = dXroll(monsterperson.damageDie) + monsterperson.damage
                 if toHitRoll >= monsterperson.critrange:
-                    damageRoll += dXroll(monsterperson.damageDie)
+                    critextradie = monsterperson.critextradie + 1  #+1 because of base crit die
+                    while critextradie > 0:
+                        damageRoll += dXroll(monsterperson.damageDie)
+                        critextradie -= 1
                     print("The " + monsterperson.name + " crit!")
                 print("The " + monsterperson.name + " deals " + damageRoll.__str__())
                 fighterperson.health -= damageRoll
